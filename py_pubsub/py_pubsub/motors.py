@@ -42,7 +42,7 @@ def main(args=None):
 
     while True:
         rclpy.spin_once(minimal_publisher,timeout_sec=1)
-        rclpy.spin_once(minimal_subscriber,timeout_sec=1)
+        rclpy.spin_once(minimal_subscriber,timeout_sec=2)
     
     # Destroy the node explicitly
     # (optional - otherwise it will be done automatically
