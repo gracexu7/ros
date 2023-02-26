@@ -10,7 +10,7 @@ class MinimalSubscriber(Node):
         super().__init__('minimal_subscriber')
         self.subscription = self.create_subscription(
             String,
-            'control-motor',
+            'control_motor',
             self.listener_callback,
             10)
         self.subscription  # prevent unused variable warning
@@ -22,7 +22,7 @@ class MinimalPublisher(Node):
 
     def __init__(self):
         super().__init__('minimal_publisher')
-        self.publisher_ = self.create_publisher(String, 'motor-control', 10)
+        self.publisher_ = self.create_publisher(String, 'motor_control', 10)
         timer_period = 1  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.i = 0
