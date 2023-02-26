@@ -1,5 +1,6 @@
 import rclpy
 from rclpy.node import Node
+from rclpy.executors import Executor
 
 from std_msgs.msg import String
 
@@ -40,15 +41,12 @@ def main(args=None):
     minimal_subscriber = MinimalSubscriber()
     minimal_publisher = MinimalPublisher()
 
-    while True:
-        rclpy.spin_once(minimal_publisher,timeout_sec=1)
-        rclpy.spin_once(minimal_subscriber,timeout_sec=2)
+    executor = Executor()
+    executor.add_node(minimal_publisher)
+    executor.add_node(minimal_subscriber)
+
+    executor.spin()
     
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
-    minimal_subscriber.destroy_node()
-    minimal_publisher.destroy_node()
     rclpy.shutdown()
 
 
