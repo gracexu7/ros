@@ -40,8 +40,9 @@ def main(args=None):
     minimal_subscriber = MinimalSubscriber()
     minimal_publisher = MinimalPublisher()
 
-    rclpy.spin(minimal_publisher)
-    rclpy.spin(minimal_subscriber)
+    while True:
+        rclpy.spin_once(minimal_publisher,timeout_sec=1)
+        rclpy.spin_once(minimal_subscriber,timeout_sec=1)
     
     # Destroy the node explicitly
     # (optional - otherwise it will be done automatically
