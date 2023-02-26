@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.executors import Executor
+from rclpy.executors import Executor, MultiThreadedExecutor
 
 from std_msgs.msg import String
 
@@ -41,7 +41,7 @@ def main(args=None):
     minimal_subscriber = MinimalSubscriber()
     minimal_publisher = MinimalPublisher()
 
-    executor = Executor()
+    executor = MultiThreadedExecutor(num_threads=2)
     executor.add_node(minimal_publisher)
     executor.add_node(minimal_subscriber)
 

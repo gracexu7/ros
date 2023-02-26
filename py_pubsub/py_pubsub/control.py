@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.executors import Executor
+from rclpy.executors import Executor, MultiThreadedExecutor
 
 from std_msgs.msg import String
 
@@ -10,7 +10,7 @@ class MinimalPublisher(Node):
     def __init__(self):
         super().__init__('minimal_publisher')
         self.publisher_ = self.create_publisher(String, 'control_motor', 10)
-        timer_period = 1.5  # seconds
+        timer_period = 1  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.i = 0
 
@@ -42,7 +42,7 @@ def main(args=None):
     minimal_subscriber = MinimalSubscriber()
     minimal_publisher = MinimalPublisher()
 
-    executor = Executor()
+    executor = MultiThreadedExecutor(num_threads=2)
     executor.add_node(minimal_publisher)
     executor.add_node(minimal_subscriber)
 
