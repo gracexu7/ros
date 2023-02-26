@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': ['motors=py_pubsub.motors:main',
-'control=py_pubsub.control:main',
+'control=py_pubsub.control:main', 'control=py_pubsub.control:main', 'comms=py_pubsub.comms:main'
         ],
     },
 )

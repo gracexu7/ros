@@ -39,18 +39,16 @@ class MinimalSubscriber(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    from_motors = MinimalSubscriber('motors_control')
-    to_motors = MinimalPublisher('control_motors')
-    from_sensors = MinimalSubscriber('sensors_control')
-    to_comms = MinimalPublisher('control_comms')
-    from_comms = MinimalSubscriber('comms_control')
+    from_control = MinimalSubscriber('control_comms')
+    to_control = MinimalPublisher('comms_control')
+    from_sensors = MinimalSubscriber('sensors_comms')
+    to_sensors = MinimalPublisher('comms_sensors')
 
-    executor = MultiThreadedExecutor(num_threads=5)
-    executor.add_node(from_motors)
-    executor.add_node(to_motors)
+    executor = MultiThreadedExecutor(num_threads=4)
+    executor.add_node(from_control)
+    executor.add_node(to_control)
     executor.add_node(from_sensors)
-    executor.add_node(to_comms)
-    executor.add_node(from_comms)
+    executor.add_node(to_sensors)
     
     executor.spin()
     
