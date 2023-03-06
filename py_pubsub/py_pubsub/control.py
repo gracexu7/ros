@@ -13,7 +13,7 @@ class MinimalPublisher(Node):
         self.publisher_ = self.create_publisher(Float64MultiArray, topic, 10)
         timer_period = 1  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
-        self.i = 0
+        self.i = 0.
 
     def timer_callback(self):
         msg = Float64MultiArray()
