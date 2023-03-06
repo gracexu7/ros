@@ -5,6 +5,23 @@ from rclpy.executors import Executor, MultiThreadedExecutor
 from std_msgs.msg import String
 from std_msgs.msg import Float64MultiArray
 
+
+class MinimalPublisher(Node):
+
+    def __init__(self, topic):
+        super().__init__('minimal_publisher')
+        self.publisher_ = self.create_publisher(Float64MultiArray, topic, 10)
+        timer_period = 1  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        msg = Float64MultiArray()
+        msg.data = [self.i for j in range(3)]
+        self.publisher_.publish(msg)
+        self.get_logger().info('Publishing: ' +str(msg.data))
+        self.i += 1
+
 class MinimalSubscriber(Node):
 
     def __init__(self, topic):
@@ -23,16 +40,12 @@ class MinimalSubscriber(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    fromcontrol = MinimalSubscriber('control_comms')
-    fromsensors = MinimalSubscriber('sensors_comms')
-    frommotor = MinimalSubscriber('motors_comms')
-    fromplanner = MinimalSubscriber('planner_comms')
+    fromsensors = MinimalSubscriber('sensors_camera')
+    toplanner = MinimalPublisher('camera_planner')
 
-    executor = MultiThreadedExecutor(num_threads=4)
-    executor.add_node(fromcontrol)
-    executor.add_node(frommotor)
+    executor = MultiThreadedExecutor(num_threads=2)
     executor.add_node(fromsensors)
-    executor.add_node(fromplanner)
+    executor.add_node(toplanner)
     
     executor.spin()
     
