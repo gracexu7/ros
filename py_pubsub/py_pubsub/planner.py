@@ -41,7 +41,7 @@ def main(args=None):
 
     fromsensor = MinimalSubscriber('sensors_planner')
     tocontrol = MinimalPublisher('planner_control')
-    fromcamera = MinimalPublisher('camera_planner')
+    fromcamera = MinimalSubscriber('camera_planner')
     tocomms = MinimalPublisher('planner_comms')
 
     executor = MultiThreadedExecutor(num_threads=4)
